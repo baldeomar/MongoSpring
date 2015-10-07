@@ -93,7 +93,7 @@ public class HelloController {
 		return person;
 	}
 	
-	@RequestMapping(value = "/testPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public ModelAndView showTestForm() {
 		ModelAndView model = new ModelAndView("login");
 		model.addObject("label", "hello");
