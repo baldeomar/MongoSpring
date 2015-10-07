@@ -99,5 +99,4 @@ public class HelloController {
 		model.addObject("label", "hello");
 		return model;
 	}
-
 }
