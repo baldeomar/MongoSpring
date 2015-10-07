@@ -87,7 +87,7 @@ public class HelloController {
 		try {
 			personDao.create(person); 
 		}catch(Exception e){
-			logger.error("erreur de creation d'un user", e);
+			logger.error("erreur de creation d'un user: ", e);
 			return null;
 		}
 		return person;
