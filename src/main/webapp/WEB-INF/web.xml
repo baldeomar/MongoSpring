@@ -40,7 +40,7 @@
 	</filter-mapping>
 	<servlet-mapping>
 		<servlet-name>mvc-dispatcher</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>com.oumar.learn.servlet.TesteurServlet</servlet-name>
