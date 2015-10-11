@@ -1,8 +1,10 @@
 package com.oumar.learn.controller;
 import javax.validation.Valid;
 
+import com.oumar.learn.Application.ApplicationUrl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +24,7 @@ import com.oumar.learn.model.Person;
 public class HelloController {
 	public static Logger logger = LoggerFactory.getLogger(HelloController.class);
 
-	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
+	@RequestMapping(value = {ApplicationUrl.ROOT, ApplicationUrl.WELCOME }, method = RequestMethod.GET)
 	public ModelAndView welcomePage() {
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "Spring Security Custom Login Form");
@@ -31,7 +33,7 @@ public class HelloController {
 		return model;
 	}
 
-	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
+	@RequestMapping(value = ApplicationUrl.ADMIN, method = RequestMethod.GET)
 	public ModelAndView adminPage() {
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "Spring Security Custom Login Form");
@@ -41,7 +43,7 @@ public class HelloController {
 	}
 
 	//Spring Security see this :
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = ApplicationUrl.LOGIN, method = RequestMethod.GET)
 	public ModelAndView login(
 		@RequestParam(value = "error", required = false) String error,
 		@RequestParam(value = "logout", required = false) String logout) {
@@ -56,34 +58,35 @@ public class HelloController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@RequestMapping(value = ApplicationUrl.REGISTER, method = RequestMethod.GET)
 	public String showRegistrationForm(Model model) {
-		//Person person = context.getBean("Person", Person.class);
 		Person person = new Person();
+		person.setFirstName("haha");
 		model.addAttribute("person", person);
 		return "register";
 	}
-	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView registerPerson(@ModelAttribute("Person") @Valid Person person,
-			BindingResult result, WebRequest request, Errors errors, WebApplicationContext context) {
+
+	@RequestMapping(value = ApplicationUrl.REGISTER, method = RequestMethod.POST)
+	public ModelAndView registerPerson(@ModelAttribute("person") @Valid Person person,
+			BindingResult result) {
 		logger.info("registering person...");
-		Person p = context.getBean("Person", Person.class);
+		Person p = new Person();
 		if(!result.hasErrors()){
-			p = createPerson(person, result, context);
+			p = createPerson(person);
 		}
 		if(p == null){
 			result.rejectValue("email", "user null returned");
 		}
 		if(result.hasErrors()) {
-			return new ModelAndView("register", "Person", p);
+			return new ModelAndView("register", "person", p);
 		}else{
-			return new ModelAndView("admin", "Person", p);
+			return new ModelAndView("admin", "person", p);
 		}
 	}
 	
-	private Person createPerson(Person person, BindingResult result, WebApplicationContext context) {
-		PersonDAO personDao = context.getBean("PersonDao", PersonDAO.class);
+	private Person createPerson(Person person) {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/applicationContext-beans.xml");
+		PersonDAO personDao = context.getBean("PersonDAO", PersonDAO.class);
 		try {
 			personDao.create(person); 
 		}catch(Exception e){
@@ -91,12 +94,5 @@ public class HelloController {
 			return null;
 		}
 		return person;
-	}
-	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public ModelAndView showTestForm() {
-		ModelAndView model = new ModelAndView("test");
-		model.addObject("label", "hello");
-		return model;
 	}
 }
