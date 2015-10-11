@@ -95,7 +95,7 @@ public class HelloController {
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public ModelAndView showTestForm() {
-		ModelAndView model = new ModelAndView("login");
+		ModelAndView model = new ModelAndView("test");
 		model.addObject("label", "hello");
 		return model;
 	}
