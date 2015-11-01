@@ -25,17 +25,17 @@ public class CostumValidator implements Validator{
             Pattern pattern = Pattern.compile(emailPattern);
             Matcher matcher = pattern.matcher(person.getEmail());
             if(!matcher.matches()){
-                errors.rejectValue("Email", "Email is not valid");
+                errors.rejectValue("email", "email.not.valid");
             }else{
                 PersonSpecifications personSpec = new PersonSpecifications();
                 if(personSpec.getPersonByEmail(person.getEmail()) != null){
-                    errors.rejectValue("Email", "Email is already used");
+                    errors.rejectValue("email", "email.already.used");
                 }
             }
             if(person.getPassword().length() < 6){
-                errors.rejectValue("Password", "Password too short");
+                errors.rejectValue("password", "password.too.short");
             }else if(!person.getPassword().equals(person.getMatchingPassword())){
-                errors.rejectValue("MatchingPassword", "Password does not match");
+                errors.rejectValue("matchingPassword", "password.not.match");
             }
         }
     }

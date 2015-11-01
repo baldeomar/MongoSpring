@@ -1,14 +1,10 @@
 package com.oumar.learn.model;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 
-import com.oumar.learn.controller.PasswordMatches;
-import com.oumar.learn.controller.ValidEmail;
+import javax.validation.constraints.NotNull;
 
-@PasswordMatches
 public class Person{
 
 	@Id
@@ -21,8 +17,7 @@ public class Person{
 	@NotNull
 	@NotEmpty
 	private String lastName;
-	
-	@ValidEmail
+
 	@NotNull
 	@NotEmpty
 	private String email;

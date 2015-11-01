@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-    	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+
     	http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.5.xsd">
 	
 	<mongo:mongo host="localhost" port="27017" id="mongo" />
@@ -27,4 +26,14 @@
 	<bean id="Person" class="com.oumar.learn.model.Person" />
 	<bean id="Album" class="com.oumar.learn.model.Album" />
 	<bean id="Photo" class="com.oumar.learn.model.Photo" />
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:labels" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
+	</bean>
+	<bean id="localResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
+		<property name="defaultLocale" value="fr" />
+	</bean>
 </beans>

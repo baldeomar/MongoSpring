@@ -7,7 +7,9 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>metzojack</title>
+		<title>
+			<spring:message code="label.form.title" />
+		</title>
 	</head>
 	<body>
 	    <H1>Welcome To Register</H1>
@@ -15,28 +17,28 @@
 	        <br>
 	        <tr>
 		        <td><label>First Name: </label></td>
-		        <td><form:input path="firstName" value="${person.firstName}" autocomplete="off" /></td>
-		        <form:errors path="firstName" element="div"/>
+		        <td><form:input path="firstName" autocomplete="off" /></td>
+		        <form:errors cssClass="error" path="firstName" element="div"/>
 	    	</tr>
 	    	<tr>
 		        <td><label>Last Name: </label></td>
-		        <td><form:input path="lastName" value="" autocomplete="off" /></td>
-		        <form:errors path="lastName" element="div" />
+		        <td><form:input path="lastName" autocomplete="off" /></td>
+		        <form:errors cssClass="error" path="lastName" element="div" />
 		    </tr>
 		    <tr>
 		        <td><label>Email: </label></td>
-		        <td><form:input path="email" value="" autocomplete="off"/></td>
-		        <form:errors path="email" element="div" />
+		        <td><form:input path="email" autocomplete="off"/></td>
+		        <form:errors cssClass="error" path="email" element="div" />
 		    </tr>
 		    <tr>
 		        <td><label>Password: </label></td>
-		        <td><form:input path="password" value="" type="password" /></td>
-		        <form:errors path="password" element="div" />
+		        <td><form:input path="password" type="password" /></td>
+		        <form:errors cssClass="error" path="password" element="div" />
 		    </tr>
 		    <tr>
 		        <td><label>Confirm password: </label></td>
-		        <td><form:input path="matchingPassword" value="" type="password" /></td>
-		        <form:errors element="div" />
+		        <td><form:input path="matchingPassword" type="password" /></td>
+		        <form:errors cssClass="error" path="matchingPassword" element="div" />
 		    </tr>
 		       <button type="submit">Send</button>
 	    </form:form>
