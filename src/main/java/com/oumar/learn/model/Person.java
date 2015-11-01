@@ -89,6 +89,10 @@ public class Person{
 	
 	@Override
 	public String toString() {
-		return "id: "+id+", name: "+firstName+" "+lastName;
+		StringBuilder person = new StringBuilder();
+		person.append("id: ").append(id)
+				.append(", name: ").append(firstName).append(" ").append(lastName)
+				.append(", email: ").append(email);
+		return person.toString();
 	}
 }

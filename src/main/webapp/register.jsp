@@ -15,17 +15,17 @@
 	        <br>
 	        <tr>
 		        <td><label>First Name: </label></td>
-		        <td><form:input path="firstName" value="${person.firstName}" /></td>
+		        <td><form:input path="firstName" value="${person.firstName}" autocomplete="off" /></td>
 		        <form:errors path="firstName" element="div"/>
 	    	</tr>
 	    	<tr>
 		        <td><label>Last Name: </label></td>
-		        <td><form:input path="lastName" value="" /></td>
+		        <td><form:input path="lastName" value="" autocomplete="off" /></td>
 		        <form:errors path="lastName" element="div" />
 		    </tr>
 		    <tr>
 		        <td><label>Email: </label></td>
-		        <td><form:input path="email" value="" /></td>
+		        <td><form:input path="email" value="" autocomplete="off"/></td>
 		        <form:errors path="email" element="div" />
 		    </tr>
 		    <tr>
