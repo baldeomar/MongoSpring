@@ -56,11 +56,11 @@ public class HelloController {
 	}
 	
 	@RequestMapping(value = AppUrl.REGISTER_PRE, method = RequestMethod.GET)
-	public String showRegistrationForm(Model model) {
+	public ModelAndView showRegistrationForm(Model model) {
 		log.info("envoi du model register");
 		Person person = new Person();
 		model.addAttribute("person", person);
-		return "register";
+		return new ModelAndView("register");
 	}
 
 	@RequestMapping(value = AppUrl.REGISTER_POST, method = RequestMethod.POST)
@@ -77,5 +77,17 @@ public class HelloController {
 			log.info("errors: {}", result.getAllErrors().toString());
 			return new ModelAndView("register", "person", person);
 		}
+	}
+
+	@RequestMapping(value = AppUrl.MAIN, method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView testMain() {
+		int size = 0;
+		try {
+			PersonSpecifications personSpec = new PersonSpecifications();
+			size = personSpec.personList().size();
+		}catch (ExceptionInInitializerError eie){
+			log.error("erreur dans spec: {}", eie);
+		}
+		return new ModelAndView("main", "size", size);
 	}
 }

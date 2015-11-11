@@ -2,12 +2,25 @@ package com.oumar.learn.Specifications;
 
 import com.oumar.learn.dao.PersonDAO;
 import com.oumar.learn.model.Person;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class PersonSpecifications {
 
-    private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/applicationContext-beans.xml");
-    private PersonDAO personDao = context.getBean("PersonDAO", PersonDAO.class);
+    private static final String PERSISTENCE_UNIT_NAME = "MongoSpring";
+    private static EntityManagerFactory entityManagerFactory =
+            Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+    @Autowired
+    private PersonDAO personDao;
 
     public Person createPerson(Person person){
         personDao.create(person);
@@ -16,5 +29,16 @@ public class PersonSpecifications {
 
     public Person getPersonByEmail(String email){
         return  personDao.findByEmail(email);
+    }
+
+    public List<Person> personList() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Person> criteriaQuery =
+                criteriaBuilder.createQuery(Person.class);
+        Root<Person> personRoot = criteriaQuery.from(Person.class);
+        criteriaQuery.select(personRoot);
+        TypedQuery<Person> typedQuery = entityManager.createQuery(criteriaQuery);
+        return typedQuery.getResultList();
     }
 }

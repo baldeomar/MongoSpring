@@ -14,7 +14,7 @@ public class Connector {
     private Connector() {
     	try {
 			client = new MongoClient(MONGO_HOST, MONGO_PORT);
-		} catch (UnknownHostException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
     }

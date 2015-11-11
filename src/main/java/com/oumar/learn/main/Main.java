@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import com.oumar.learn.Specifications.PersonSpecifications;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.mongodb.BasicDBObject;
@@ -16,16 +17,10 @@ import com.oumar.learn.model.Person;
 import com.oumar.learn.model.Photo;
  
 public class Main {
-	
-    public static final String DB_NAME = "test";
-    public static final String PERSON_COLLECTION = "Person";
  
     public static void main(String[] args) {
-    	ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("WEB-INF/applicationContext-beans.xml");
-        
-    	getDataFromPerson("55f2a5ade4b0c13cbbd0f24a", ctx);
-    	//fillDB(ctx);
-		ctx.close();
+		PersonSpecifications personSpecifications = new PersonSpecifications();
+		System.out.println("result: "+personSpecifications.personList().toString());
     }
     
     public static void addAlbum(ClassPathXmlApplicationContext ctx, Person person){

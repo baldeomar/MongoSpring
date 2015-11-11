@@ -7,4 +7,5 @@ public final class AppUrl {
     public static final String ADMIN = "/admin**";
     public static final String LOGIN = "/login";
     public static final String WELCOME = "/welcome**";
+    public static final String MAIN = "/main";
 }
