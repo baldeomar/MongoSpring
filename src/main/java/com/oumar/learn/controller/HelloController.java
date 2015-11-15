@@ -5,6 +5,7 @@ import com.oumar.learn.Specifications.PersonSpecifications;
 import com.oumar.learn.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,7 +56,7 @@ public class HelloController {
 		return model;
 	}
 	
-	@RequestMapping(value = AppUrl.REGISTER_PRE, method = RequestMethod.GET)
+	@RequestMapping(value = AppUrl.REGISTER_PRE, method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView showRegistrationForm(Model model) {
 		log.info("envoi du model register");
 		Person person = new Person();
@@ -89,5 +90,13 @@ public class HelloController {
 			log.error("erreur dans spec: {}", eie);
 		}
 		return new ModelAndView("main", "size", size);
+	}
+
+	@RequestMapping(value = AppUrl.DATATABLE_HANDLE, method = RequestMethod.GET)
+	public ModelAndView getDataTable() {
+		log.info("giving datatable page");
+		ModelAndView model = new ModelAndView();
+		model.setViewName("handleDataTable");
+		return model;
 	}
 }

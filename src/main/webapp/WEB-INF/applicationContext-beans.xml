@@ -22,5 +22,6 @@
 	<bean id="localResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
 		<property name="defaultLocale" value="fr" />
 	</bean>
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
 	<mvc:annotation-driven/>
 </beans>

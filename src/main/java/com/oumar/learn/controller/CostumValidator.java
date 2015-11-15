@@ -2,6 +2,7 @@ package com.oumar.learn.controller;
 
 import com.oumar.learn.Specifications.PersonSpecifications;
 import com.oumar.learn.model.Person;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -32,7 +33,13 @@ public class CostumValidator implements Validator{
                     errors.rejectValue("email", "email.already.used");
                 }
             }
+            if(person.getPassword() == null
+                || person.getMatchingPassword() == null
+                || StringUtils.isEmpty(person.getPassword())
+                || StringUtils.isEmpty(person.getMatchingPassword())
+                || !person.getPassword().equals(person.getMatchingPassword())){
+                errors.rejectValue("password", "password.not.correct");
+            }
         }
     }
-
 }
