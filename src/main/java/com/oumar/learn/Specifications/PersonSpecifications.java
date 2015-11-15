@@ -16,9 +16,13 @@ import java.util.List;
 public class PersonSpecifications {
 
     private static final String PERSISTENCE_UNIT_NAME = "MongoSpring";
-    private static EntityManagerFactory entityManagerFactory =
-            Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    private static EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
 
+    public PersonSpecifications() {
+        entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        entityManager = entityManagerFactory.createEntityManager();
+    }
     @Autowired
     private PersonDAO personDao;
 
@@ -32,7 +36,6 @@ public class PersonSpecifications {
     }
 
     public List<Person> personList() {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Person> criteriaQuery =
                 criteriaBuilder.createQuery(Person.class);

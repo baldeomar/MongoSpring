@@ -23,16 +23,6 @@ public class Main {
 		System.out.println("result: "+personSpecifications.personList().toString());
     }
     
-    public static void addAlbum(ClassPathXmlApplicationContext ctx, Person person){
-    	AlbumDAO ad = ctx.getBean("AlbumDAO", AlbumDAO.class);
-    	Album album = ctx.getBean("Album", Album.class);
-    	album.setName("album 1");
-    	album.setType(1);
-    	album.setPerson(person.getId());
-    	
-    	ad.addAlbum(album);
-    }
-    
     public static void removeAll(PersonDAO pd){
         List<BasicDBObject> objects = pd.complexeCrit();
         System.out.println("size: "+objects.size());
@@ -44,36 +34,6 @@ public class Main {
         		}
         	}
         }
-    }
-    
-    public static void fillDB(ClassPathXmlApplicationContext ctx) {
-    	PersonDAO personDao = ctx.getBean("PersonDAO", PersonDAO.class);
-    	AlbumDAO albumDao = ctx.getBean("AlbumDAO", AlbumDAO.class);
-    	PhotoDAO photoDao = ctx.getBean("PhotoDAO", PhotoDAO.class);
-    	for(int i = 0; i < 1; i++){
-    		Person p = ctx.getBean("Person", Person.class);
-    		String alea = UUID.randomUUID().toString();
-    		p.setId(null);
-    		p.setFirstName(alea);
-    		personDao.create(p);
-    		for(int j = 0; j < 5; j++) {
-    			Album album = ctx.getBean("Album", Album.class);
-    			album.setId(null);
-    			album.setName(alea);
-    			album.setType(1);
-    			album.setPerson(p.getId());
-    			albumDao.addAlbum(album);
-    			for(int k = 0; k < 10; k++) {
-    				Photo photo = ctx.getBean("Photo", Photo.class);
-    				photo.setId(null);
-    				photo.setName(alea);
-    				photo.setType(2);
-    				photo.setAlbum(album.getId());
-    				photoDao.addPhoto(photo);
-    			}
-    		}
-    	}
-    	System.out.println("done...");
     }
     
     public static void processOnePhoto(ClassPathXmlApplicationContext ctx) {

@@ -32,11 +32,6 @@ public class CostumValidator implements Validator{
                     errors.rejectValue("email", "email.already.used");
                 }
             }
-            if(person.getPassword().length() < 6){
-                errors.rejectValue("password", "password.too.short");
-            }else if(!person.getPassword().equals(person.getMatchingPassword())){
-                errors.rejectValue("matchingPassword", "password.not.match");
-            }
         }
     }
 

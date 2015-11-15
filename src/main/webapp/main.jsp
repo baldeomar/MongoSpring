@@ -7,6 +7,6 @@
     <title><spring:message code="page.main.title"/></title>
 </head>
 <body>
-    how high: ${size}
+    how highi: ${size}
 </body>
 </html>
