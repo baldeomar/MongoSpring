@@ -7,17 +7,17 @@ import com.oumar.learn.model.Person;
 
 public interface PersonDAO {
 	
-    public void create(Person p);
+    void create(Person p);
     
-    public Person readById(String id);
+    Person readById(String id);
      
-    public void update(Person p);
+    void update(Person p);
      
-    public int deleteById(String id);
+    int deleteById(String id);
     
-    public Person readOne();
+    Person readOne();
     
-    public List<BasicDBObject> complexeCrit();
+    List<BasicDBObject> complexeCrit();
     
-    public Person findByEmail(String email);
+    Person findByEmail(String email);
 }

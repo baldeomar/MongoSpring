@@ -7,7 +7,7 @@
 	   	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 	   	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<context:component-scan base-package="com.oumar.learn.controller"/>
+	<context:component-scan base-package="com.oumar.learn"/>
 	<import resource="applicationContext-security.xml"/>
 	<bean id="Person" class="com.oumar.learn.model.Person" />
 	<bean id="Album" class="com.oumar.learn.model.Album" />

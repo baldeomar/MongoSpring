@@ -13,31 +13,42 @@
 	</head>
 	<body>
 	    <H1>Welcome To Register</H1>
-	    <form:form modelAttribute="person" method="POST" enctype="utf8">
+	    <form:form action="${pageContext.request.contextPath}${registerPostLink}" modelAttribute="person" method="POST" enctype="utf8">
 	        <br>
-	        <tr>
-		        <td><label>Prenom: </label></td>
-		        <td><form:input path="prenom" autocomplete="off" /></td>
-	    	</tr><br>
-	    	<tr>
-		        <td><label>Nom: </label></td>
-		        <td><form:input path="nom" autocomplete="off" /></td>
-		    </tr><br>
-		    <tr>
-		        <td><label>Email: </label></td>
-		        <td><form:input path="email" autocomplete="off"/></td>
-				<td><span id="errorEmail" class="error" style="visibility: hidden; color: red">
-					<spring:message code="input.champs.incorrect"></spring:message></span></td>
-		    </tr><br>
-		    <tr>
-		        <td><label>Password: </label></td>
-		        <td><form:input path="password" type="password" /></td>
-		    </tr><br>
-		    <tr>
-		        <td><label>Confirm password: </label></td>
-		        <td><form:input path="matchingPassword" type="password" /></td>
-		    </tr><br>
-		       <button type="submit">Send</button>
+			<table>
+				<tbody>
+					<tr>
+						<td><label>Prenom: </label></td>
+						<td><form:input path="prenom" autocomplete="off" /></td>
+                        <td><form:errors path="prenom"/></td>
+					</tr>
+					<tr>
+						<td><label>Nom: </label></td>
+						<td><form:input path="nom" autocomplete="off" /></td>
+                        <td><form:errors path="nom"/></td>
+					</tr>
+					<tr>
+						<td><label>Email: </label></td>
+						<td><form:input path="email" autocomplete="off"/></td>
+						<td><form:errors cssClass="error" path="email"/></td>
+					</tr>
+					<tr>
+						<td><label>Password: </label></td>
+						<td><form:input path="password" type="password" /></td>
+						<td><form:errors path="password" cssClass="error"/></td>
+					</tr>
+					<tr>
+						<td><label>Confirm password: </label></td>
+						<td><form:input path="matchingPassword" type="password" /></td>
+						<td><form:errors path="matchingPassword" cssClass="error"/></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+					   		<button type="submit">Send</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 	    </form:form>
 	    <br>
 	</body>

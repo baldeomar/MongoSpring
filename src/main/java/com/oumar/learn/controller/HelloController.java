@@ -1,11 +1,11 @@
 package com.oumar.learn.controller;
 
 import com.oumar.learn.Application.AppUrl;
+import com.oumar.learn.Application.PageMap;
 import com.oumar.learn.Specifications.PersonSpecifications;
 import com.oumar.learn.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,61 +22,51 @@ public class HelloController {
 
 	private static Logger log = LoggerFactory.getLogger(HelloController.class);
 
-	@RequestMapping(value = {AppUrl.ROOT, AppUrl.WELCOME }, method = RequestMethod.GET)
-	public ModelAndView welcomePage() {
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security Custom Login Form");
-		model.addObject("message", "This is welcome page!");
-		model.setViewName("hello");
-		return model;
-	}
+	private static final String MODEL_ATTRIBUTE_ERROR = "error";
+	private static final String MODEL_ATTRIBUTE_MESSAGE = "message";
+	private static final String MODEL_ATTRIBUTE_REGISTER_PAGE = "registerPage";
+	private static final String MODEL_ATTRIBUTE_PERSON = "person";
+	private static final String MODEL_ATTRIBUTE_REGISTER_POST_LINK = "registerPostLink";
 
-	@RequestMapping(value = AppUrl.ADMIN, method = RequestMethod.GET)
-	public ModelAndView adminPage() {
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security Custom Login Form");
-		model.addObject("message", "This is protected page!");
-		model.setViewName("admin");
-		return model;
-	}
-
-	//Spring Security see this :
 	@RequestMapping(value = AppUrl.LOGIN, method = RequestMethod.GET)
-	public ModelAndView login(
+	public String login(
 		@RequestParam(value = "error", required = false) String error,
-		@RequestParam(value = "logout", required = false) String logout) {
-		ModelAndView model = new ModelAndView();
+		@RequestParam(value = "logout", required = false) String logout,
+		Model model) {
 		if (error != null) {
-			model.addObject("error", "Invalid username and password!");
+			model.addAttribute(MODEL_ATTRIBUTE_ERROR, "Invalid username and password!");
 		}
 		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
+			model.addAttribute(MODEL_ATTRIBUTE_MESSAGE, "You've been logged out successfully.");
 		}
-		model.setViewName("login");
-		return model;
+		model.addAttribute(MODEL_ATTRIBUTE_REGISTER_PAGE, AppUrl.REGISTER_PRE);
+		return PageMap.LOGIN;
 	}
 	
 	@RequestMapping(value = AppUrl.REGISTER_PRE, method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView showRegistrationForm(Model model) {
+	public String showRegistrationForm(Model model) {
 		log.info("envoi du model register");
 		Person person = new Person();
-		model.addAttribute("person", person);
-		return new ModelAndView("register");
+		model.addAttribute(MODEL_ATTRIBUTE_PERSON, person);
+		model.addAttribute(MODEL_ATTRIBUTE_REGISTER_POST_LINK, AppUrl.REGISTER_POST);
+		return PageMap.REGISTER_PRE;
 	}
 
 	@RequestMapping(value = AppUrl.REGISTER_POST, method = RequestMethod.POST)
-	public ModelAndView registerPerson(@ModelAttribute("person") @Valid Person person,
-			BindingResult result) {
+	public String registerPerson(@ModelAttribute("person") @Valid Person person,
+			BindingResult result, Model model) {
 		log.info("registering person...{}", person.toString());
 		PersonSpecifications personSpec = new PersonSpecifications();
 		CostumValidator costumValidator = new CostumValidator();
 		costumValidator.validate(person, result);
 		if(!result.hasErrors()){
-			Person createdPerson = personSpec.createPerson(person);
-			return new ModelAndView("admin", "person", createdPerson);
+			personSpec.createPerson(person);
+			return "redirect: "+PageMap.ADMIN;
 		}else{
 			log.info("errors: {}", result.getAllErrors().toString());
-			return new ModelAndView("register", "person", person);
+			model.addAttribute(MODEL_ATTRIBUTE_PERSON, person);
+			model.addAttribute(MODEL_ATTRIBUTE_REGISTER_POST_LINK, AppUrl.REGISTER_POST);
+			return PageMap.REGISTER_PRE;
 		}
 	}
 

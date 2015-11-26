@@ -20,6 +20,12 @@ public class CostumValidator implements Validator{
     public void validate(Object object, Errors errors){
         if(object instanceof Person){
             Person person = (Person) object;
+            if(person.getPrenom() == null || StringUtils.isEmpty(person.getPrenom())){
+                errors.rejectValue("prenom", "empty.not.allowed");
+            }
+            if(person.getNom() == null || StringUtils.isEmpty(person.getNom())){
+                errors.rejectValue("nom", "empty.not.allowed");
+            }
             String emailPattern = "^[_A-Za-z0-9-+]+"
                     +"(.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(.[A-Za-z0-9]+)"
                     +"*(.[A-Za-z]{2,})$";
@@ -34,11 +40,12 @@ public class CostumValidator implements Validator{
                 }
             }
             if(person.getPassword() == null
-                || person.getMatchingPassword() == null
-                || StringUtils.isEmpty(person.getPassword())
-                || StringUtils.isEmpty(person.getMatchingPassword())
-                || !person.getPassword().equals(person.getMatchingPassword())){
+                    || StringUtils.isEmpty(person.getPassword())){
                 errors.rejectValue("password", "password.not.correct");
+            }else if(person.getMatchingPassword() == null
+                    || StringUtils.isEmpty(person.getMatchingPassword())
+                    || !person.getPassword().equals(person.getMatchingPassword())){
+                errors.rejectValue("matchingPassword", "password.not.match");
             }
         }
     }
