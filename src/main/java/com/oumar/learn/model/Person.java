@@ -1,6 +1,7 @@
 package com.oumar.learn.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -27,12 +27,12 @@ public class PersonSpecifications {
     private PersonDAO personDao;
 
     public Person createPerson(Person person){
-        personDao.create(person);
+        //personDao.create(person);
         return person;
     }
 
     public Person getPersonByEmail(String email){
-        return  personDao.findByEmail(email);
+        return  personDao.getByEmail(email);
     }
 
     public List<Person> personList() {

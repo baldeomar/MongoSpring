@@ -1,4 +1,4 @@
-package com.oumar.learn.Application;
+package com.oumar.learn.application;
 
 /**
  * Created by oumar on 26/11/15.

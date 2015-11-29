@@ -1,7 +1,8 @@
 package com.oumar.learn.controller;
 
-import com.oumar.learn.Specifications.PersonSpecifications;
 import com.oumar.learn.model.Person;
+import com.oumar.learn.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -10,6 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CostumValidator implements Validator{
+
+    @Autowired
+    private PersonService personService;
 
     @Override
     public boolean supports(Class<?> arg){
@@ -34,8 +38,7 @@ public class CostumValidator implements Validator{
             if(!matcher.matches()){
                 errors.rejectValue("email", "email.not.valid");
             }else{
-                PersonSpecifications personSpec = new PersonSpecifications();
-                if(personSpec.getPersonByEmail(person.getEmail()) != null){
+                if(personService.getByEmail(person.getEmail()) != null){
                     errors.rejectValue("email", "email.already.used");
                 }
             }

@@ -1,4 +1,4 @@
-package com.oumar.learn.Application;
+package com.oumar.learn.application;
 
 public final class AppUrl {
     public static final String ROOT = "/";

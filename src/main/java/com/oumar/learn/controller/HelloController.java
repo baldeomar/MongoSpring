@@ -1,8 +1,8 @@
 package com.oumar.learn.controller;
 
-import com.oumar.learn.Application.AppUrl;
-import com.oumar.learn.Application.PageMap;
 import com.oumar.learn.Specifications.PersonSpecifications;
+import com.oumar.learn.application.AppUrl;
+import com.oumar.learn.application.PageMap;
 import com.oumar.learn.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
