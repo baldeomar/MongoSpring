@@ -1,31 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	   	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+	   	http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+	   	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	   	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-    	http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.5.xsd">
-	
-	<mongo:mongo host="localhost" port="27017" id="mongo" />
-	<mongo:db-factory dbname="test" mongo-ref="mongo" 
-		id="mongoDbFactory" />
-		
-	<bean id="mongoTemplate" 
-		class="org.springframework.data.mongodb.core.MongoTemplate">
-	    <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-	</bean>
-	<bean id="PersonDAO" class="com.oumar.learn.dao.PersonDAOImpl">
-	    <constructor-arg name="mongoOps" ref="mongoTemplate"/>
-	</bean>
-	<bean id="AlbumDAO" class="com.oumar.learn.dao.AlbumDAOImpl">
-	    <constructor-arg name="mongoOps" ref="mongoTemplate"/>
-	</bean>
-	<bean id="PhotoDAO" class="com.oumar.learn.dao.PhotoDAOImpl">
-	    <constructor-arg name="mongoOps" ref="mongoTemplate"/>
-	</bean>
-	<bean id="Person" class="com.oumar.learn.model.Person" />
-	<bean id="Album" class="com.oumar.learn.model.Album" />
-	<bean id="Photo" class="com.oumar.learn.model.Photo" />
+	<context:annotation-config />
+	<context:component-scan base-package="com.oumar.learn"/>
+	<jpa:repositories base-package="com.oumar.learn.repository"/>
+	<import resource="applicationContext-security.xml"/>
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:labels" />
 		<property name="defaultEncoding" value="UTF-8" />
@@ -36,4 +25,25 @@
 	<bean id="localResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
 		<property name="defaultLocale" value="fr" />
 	</bean>
+	<bean id="entityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="packagesToScan" value="com.oumar.learn"/>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+		</property>
+	</bean>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/test"/>
+		<property name="username" value="root"/>
+		<property name="password" value="Orumaa3507"/>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactoryBean"/>
+	</bean>
+
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
+
+	<mvc:annotation-driven/>
+	<tx:annotation-driven/>
 </beans>
