@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div id="email" class="col-sm-6">Email: </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 ${status.error ? 'has-error' : ''}">
                             <form:input path="email" id="inputEmail"/>
                             <form:errors cssClass="error" path="email"/>
                         </div>

@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -15,6 +17,15 @@ public class PersonDAOImpl implements PersonDAO{
     private EntityManager entityManager;
 
     public Person getByEmail(String email){
-        return entityManager.createQuery("SELECT p FROM Person p WHERE p.email = ?1", Person.class).getSingleResult();
+        List<Person> persons = entityManager.createQuery("SELECT p FROM Person p WHERE p.email = :email", Person.class).setParameter("email", email).getResultList();
+        if(!persons.isEmpty()){
+            return persons.get(0);
+        }else{
+            return null;
+        }
+    }
+
+    public void saveOrUpdate(Person person){
+        entityManager.persist(person);
     }
 }

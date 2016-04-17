@@ -3,7 +3,9 @@ package com.oumar.learn.controller;
 import com.oumar.learn.Specifications.PersonSpecifications;
 import com.oumar.learn.application.AppUrl;
 import com.oumar.learn.application.PageMap;
+import com.oumar.learn.application.StringUtils;
 import com.oumar.learn.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,12 @@ import javax.validation.Valid;
 
 @Controller
 public class HelloController {
+
+	@Autowired
+	PersonSpecifications personSpecifications;
+
+	@Autowired
+	CostumValidator costumValidator;
 
 	private static final String MODEL_ATTRIBUTE_ERROR = "error";
 	private static final String MODEL_ATTRIBUTE_MESSAGE = "message";
@@ -57,12 +65,11 @@ public class HelloController {
 	@RequestMapping(value = AppUrl.REGISTER_POST, method = RequestMethod.POST)
 	public String registerPerson(@ModelAttribute("person") @Valid Person person,
 			BindingResult result, Model model) {
-		PersonSpecifications personSpec = new PersonSpecifications();
-		CostumValidator costumValidator = new CostumValidator();
 		costumValidator.validate(person, result);
 		if(!result.hasErrors()){
-			personSpec.createPerson(person);
-			return "redirect: "+PageMap.ADMIN;
+			person.setPassword(StringUtils.passwordHash(person.getPassword()));
+			personSpecifications.createPerson(person);
+			return PageMap.HOME;
 		}else{
 			model.addAttribute(MODEL_ATTRIBUTE_PERSON, person);
 			model.addAttribute(MODEL_ATTRIBUTE_REGISTER_POST, AppUrl.REGISTER_POST);

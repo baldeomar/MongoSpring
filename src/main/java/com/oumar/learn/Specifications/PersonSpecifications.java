@@ -3,6 +3,7 @@ package com.oumar.learn.Specifications;
 import com.oumar.learn.dao.PersonDAO;
 import com.oumar.learn.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,11 +12,13 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.xml.ws.ServiceMode;
 import java.util.List;
 
+@Service
 public class PersonSpecifications {
 
-    private static final String PERSISTENCE_UNIT_NAME = "MongoSpring";
+    private static final String PERSISTENCE_UNIT_NAME = "MongoPersistenceUnit";
     private static EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
@@ -27,7 +30,7 @@ public class PersonSpecifications {
     private PersonDAO personDao;
 
     public Person createPerson(Person person){
-        //personDao.create(person);
+        personDao.saveOrUpdate(person);
         return person;
     }
 
