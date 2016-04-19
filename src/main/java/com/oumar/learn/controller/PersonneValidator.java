@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class CostumValidator implements Validator{
+public class PersonneValidator implements Validator{
 
     @Autowired
     private PersonService personService;

@@ -21,7 +21,7 @@
 	<bean id="localResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
 		<property name="defaultLocale" value="fr" />
 	</bean>
-	<bean id="CostumValidator" class="com.oumar.learn.controller.CostumValidator"/>
+	<bean id="CostumValidator" class="com.oumar.learn.controller.PersonneValidator"/>
 	<bean id="entityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="packagesToScan" value="com.oumar.learn.model"/>
@@ -44,6 +44,8 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactoryBean"/>
 	</bean>
+
+	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 	<mvc:resources mapping="/resources/**" location="/resources/"/>
 

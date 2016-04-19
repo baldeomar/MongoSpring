@@ -15,6 +15,16 @@ public class PersonServiceImpl implements PersonService{
     private PersonDAO personDAO;
 
     @Override
+    public Person saveOrUpdate(Person person){
+        return personDAO.save(person);
+    }
+
+    @Override
+    public Person findOne(Integer id){
+        return personDAO.findOne(id);
+    }
+
+    @Override
     public Person getByEmail(String email){
         return personDAO.getByEmail(email);
     }

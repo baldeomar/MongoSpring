@@ -3,9 +3,11 @@ package com.oumar.learn.controller;
 import com.oumar.learn.Specifications.PersonSpecifications;
 import com.oumar.learn.application.AppUrl;
 import com.oumar.learn.application.PageMap;
-import com.oumar.learn.application.StringUtils;
 import com.oumar.learn.model.Person;
+import com.oumar.learn.service.PersonService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,14 +19,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
-public class HelloController {
+public class PersonneController {
 
 	@Autowired
-	PersonSpecifications personSpecifications;
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	CostumValidator costumValidator;
+	PersonService personService;
+
+	@Autowired
+	PersonneValidator personneValidator;
 
 	private static final String MODEL_ATTRIBUTE_ERROR = "error";
 	private static final String MODEL_ATTRIBUTE_MESSAGE = "message";
@@ -65,10 +71,10 @@ public class HelloController {
 	@RequestMapping(value = AppUrl.REGISTER_POST, method = RequestMethod.POST)
 	public String registerPerson(@ModelAttribute("person") @Valid Person person,
 			BindingResult result, Model model) {
-		costumValidator.validate(person, result);
+		personneValidator.validate(person, result);
 		if(!result.hasErrors()){
-			person.setPassword(StringUtils.passwordHash(person.getPassword()));
-			personSpecifications.createPerson(person);
+			person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
+			personService.saveOrUpdate(person);
 			return PageMap.HOME;
 		}else{
 			model.addAttribute(MODEL_ATTRIBUTE_PERSON, person);
