@@ -1,6 +1,5 @@
 package com.oumar.learn.controller;
 
-import com.oumar.learn.Specifications.PersonSpecifications;
 import com.oumar.learn.application.AppUrl;
 import com.oumar.learn.application.PageMap;
 import com.oumar.learn.model.Person;
@@ -73,6 +72,7 @@ public class PersonneController {
 			BindingResult result, Model model) {
 		personneValidator.validate(person, result);
 		if(!result.hasErrors()){
+			log.info("trying to register person email {}", person.getEmail());
 			person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
 			personService.saveOrUpdate(person);
 			return PageMap.HOME;
@@ -81,18 +81,6 @@ public class PersonneController {
 			model.addAttribute(MODEL_ATTRIBUTE_REGISTER_POST, AppUrl.REGISTER_POST);
 			return PageMap.REGISTER_PRE;
 		}
-	}
-
-	@RequestMapping(value = AppUrl.MAIN, method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView testMain() {
-		int size = 0;
-		try {
-			PersonSpecifications personSpec = new PersonSpecifications();
-			size = personSpec.personList().size();
-		}catch (ExceptionInInitializerError eie){
-			eie.printStackTrace();
-		}
-		return new ModelAndView("main", "size", size);
 	}
 
 	@RequestMapping(value = AppUrl.DATATABLE_HANDLE, method = RequestMethod.GET)
