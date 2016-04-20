@@ -6,7 +6,6 @@
                 http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
     <persistence-unit name="MongoPersistenceUnit" transaction-type="RESOURCE_LOCAL">
        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.oumar.learn.model.Person</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test"/>

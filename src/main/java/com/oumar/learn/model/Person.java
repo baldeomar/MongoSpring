@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -36,12 +38,8 @@ public class Person{
 
 	@Transient
 	private String matchingPassword;
-	
-	@Override
-	public String toString() {
-		StringBuilder person = new StringBuilder();
-		person.append("id: ").append(id)
-				.append(", email: ").append(email);
-		return person.toString();
-	}
+
+	@OneToOne
+	@JoinColumn(name = "profil_fk")
+	private Profil profil;
 }
