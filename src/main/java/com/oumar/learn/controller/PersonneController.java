@@ -3,6 +3,7 @@ package com.oumar.learn.controller;
 import com.oumar.learn.application.AppUrl;
 import com.oumar.learn.application.PageMap;
 import com.oumar.learn.model.Person;
+import com.oumar.learn.model.Vto.PersonneVto;
 import com.oumar.learn.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class PersonneController {
 	private static final String MODEL_ATTRIBUTE_ERROR = "error";
 	private static final String MODEL_ATTRIBUTE_MESSAGE = "message";
 	private static final String MODEL_ATTRIBUTE_REGISTER_PAGE = "registerPage";
-	private static final String MODEL_ATTRIBUTE_PERSON = "person";
+	private static final String MODEL_ATTRIBUTE_PERSON = "personneForm";
 	private static final String MODEL_ATTRIBUTE_REGISTER_POST = "registerPost";
 	private static final String MODEL_LOGIN_POST = "loginPost";
 
@@ -61,23 +62,24 @@ public class PersonneController {
 	
 	@RequestMapping(value = AppUrl.REGISTER_PRE, method = RequestMethod.GET)
 	public String showRegistrationForm(Model model) {
-		Person person = new Person();
-		model.addAttribute(MODEL_ATTRIBUTE_PERSON, person);
+		PersonneVto personneVto = new PersonneVto();
+		model.addAttribute(MODEL_ATTRIBUTE_PERSON, personneVto);
 		model.addAttribute(MODEL_ATTRIBUTE_REGISTER_POST, AppUrl.REGISTER_POST);
 		return PageMap.REGISTER_PRE;
 	}
 
 	@RequestMapping(value = AppUrl.REGISTER_POST, method = RequestMethod.POST)
-	public String registerPerson(@ModelAttribute("person") @Valid Person person,
+	public String registerPerson(@ModelAttribute("personneForm") PersonneVto personneVto,
 			BindingResult result, Model model) {
-		personneValidator.validate(person, result);
+		personneValidator.validate(personneVto, result);
 		if(!result.hasErrors()){
-			log.info("trying to register person email {}", person.getEmail());
+			log.info("trying to register person email {}", personneVto.getEmail());
+			Person person = personneVto.toPerson();
 			person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
 			personService.saveOrUpdate(person);
 			return PageMap.HOME;
 		}else{
-			model.addAttribute(MODEL_ATTRIBUTE_PERSON, person);
+			model.addAttribute(MODEL_ATTRIBUTE_PERSON, personneVto);
 			model.addAttribute(MODEL_ATTRIBUTE_REGISTER_POST, AppUrl.REGISTER_POST);
 			return PageMap.REGISTER_PRE;
 		}

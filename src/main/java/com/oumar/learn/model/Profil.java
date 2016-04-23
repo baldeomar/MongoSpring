@@ -30,6 +30,6 @@ public class Profil {
     private String nom;
 
     @NotEmpty
-    @Length(min = 12, max = 12)
+    @Length(min = 10, max = 10)
     private String date_de_naissance;
 }

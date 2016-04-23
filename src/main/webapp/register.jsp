@@ -10,10 +10,16 @@
         <title>
             <spring:message code="label.form.title" />
         </title>
+        <script type="text/javascript" src="resources/js/jquery.js"/>
+        <script>
+            jQuery(function($){
+                $("#date_de_naissance").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
+            });
+        </script>
     </head>
     <body>
         <H1>Welcome To Register</H1>
-        <form:form modelAttribute="person" action="${pageContext.request.contextPath}${registerPost}" method="POST">
+        <form:form modelAttribute="personneForm" action="${pageContext.request.contextPath}${registerPost}" method="POST">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
@@ -39,6 +45,30 @@
                         <div class="col-sm-6">
                             <form:password path="matchingPassword" id="inputMatchingPassword"/>
                             <form:errors cssClass="error" path="matchingPassword"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="prenom" class="col-sm-6">Prénom: </div>
+                        <div class="col-sm-6">
+                            <form:input path="prenom"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="nom" class="col-sm-6">Nom: </div>
+                        <div class="col-sm-6">
+                            <form:input path="nom"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="date_de_naissance" class="col-sm-6">Date de naissance: </div>
+                        <div class="col-sm-6">
+                            <form:input path="date_de_naissance" />
                         </div>
                     </div>
                 </div>

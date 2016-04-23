@@ -1,6 +1,6 @@
 package com.oumar.learn.controller;
 
-import com.oumar.learn.model.Person;
+import com.oumar.learn.model.Vto.PersonneVto;
 import com.oumar.learn.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,23 +24,23 @@ public class PersonneValidator implements Validator{
 
     @Override
     public void validate(Object object, Errors errors){
-        if(object instanceof Person){
-            Person person = (Person) object;
-            if(StringUtils.isEmpty(person.getEmail())){
+        if(object instanceof PersonneVto){
+            PersonneVto personneVto = (PersonneVto) object;
+            if(StringUtils.isEmpty(personneVto.getEmail())){
                 errors.rejectValue("email", "email.not.valid");
             }else {
                 String emailPattern = "^[_A-Za-z0-9-+]+"
                         + "(.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(.[A-Za-z0-9]+)"
                         + "*(.[A-Za-z]{2,})$";
                 Pattern pattern = Pattern.compile(emailPattern);
-                Matcher matcher = pattern.matcher(person.getEmail());
+                Matcher matcher = pattern.matcher(personneVto.getEmail());
                 if (!matcher.matches()) {
                     errors.rejectValue("email", "email.not.valid");
-                }else if(StringUtils.isEmpty(person.getPassword())){
+                }else if(StringUtils.isEmpty(personneVto.getPassword())){
                     errors.rejectValue("password", "password.not.correct");
-                }else if(!person.getPassword().equals(person.getMatchingPassword())){
+                }else if(!personneVto.getPassword().equals(personneVto.getMatchingPassword())){
                     errors.rejectValue("matchingPassword", "password.not.match");
-                }else if(personService.getByEmail(person.getEmail()) != null) {
+                }else if(personService.getByEmail(personneVto.getEmail()) != null) {
                     errors.rejectValue("email", "email.already.used");
                 }
             }
