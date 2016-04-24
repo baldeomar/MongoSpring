@@ -21,19 +21,22 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "Person")
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Person{
 
 	@Id
 	@Column(name = "person_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotNull
 	@NotEmpty
 	@Column(name = "email")
 	private String email;
 
-	@NotNull
+    @NotEmpty
+    @Column(name = "username")
+    private String username;
+
 	@NotEmpty
 	@Column(name = "password")
 	private String password;

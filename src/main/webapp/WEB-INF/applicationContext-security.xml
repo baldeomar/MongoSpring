@@ -17,11 +17,18 @@
 		<logout logout-success-url="/login?logout" />
 	</http>
 
+	<!--<authentication-manager>-->
+		<!--<authentication-provider>-->
+		  <!--<user-service>-->
+			<!--<user name="jack.bauer@ctu.org" password="123456" authorities="ROLE_USER" />-->
+		  <!--</user-service>-->
+		<!--</authentication-provider>-->
+	<!--</authentication-manager>-->
 	<authentication-manager>
 		<authentication-provider>
-		  <user-service>
-			<user name="jack.bauer@ctu.org" password="123456" authorities="ROLE_USER" />
-		  </user-service>
+			<jdbc-user-service data-source-ref="dataSource"
+							   users-by-username-query="select username, password from Person where username = ?"/>
+							   <!--authorities-by-username-query="select username,role from Roles where username = ?"-->
 		</authentication-provider>
 	</authentication-manager>
 

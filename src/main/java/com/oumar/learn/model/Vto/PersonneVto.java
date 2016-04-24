@@ -13,6 +13,8 @@ public class PersonneVto {
 
     private String email;
 
+    private String username;
+
     private String password;
 
     private String matchingPassword;
@@ -31,6 +33,7 @@ public class PersonneVto {
 
         person.setId(person_id);
         person.setEmail(email);
+        person.setUsername(username);
         person.setPassword(password);
 
         profil.setProfil_id(profil_id);

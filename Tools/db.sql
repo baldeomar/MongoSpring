@@ -14,6 +14,10 @@ SET time_zone = "+00:00";
 -- Base de données: `test`
 --
 
+DROP DATABASE test;
+CREATE DATABASE test;
+USE test;
+
 -- --------------------------------------------------------
 
 --
@@ -23,9 +27,11 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `Person` (
   `person_id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` varchar(200) NOT NULL,
   `profil_fk` int(11) NOT NULL,
   PRIMARY KEY (`person_id`),
+  KEY `username` (`username`),
   KEY `profil_fk` (`profil_fk`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 

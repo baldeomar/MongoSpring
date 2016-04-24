@@ -16,10 +16,11 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "Profil")
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Profil {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profil_id")
     private Integer profil_id;
 

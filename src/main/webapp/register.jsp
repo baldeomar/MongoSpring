@@ -32,6 +32,15 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
+                        <div id="username" class="col-sm-6">Username: </div>
+                        <div class="col-sm-6 ${status.error ? 'has-error' : ''}">
+                            <form:input path="username" id="inputUsername"/>
+                            <form:errors cssClass="error" path="username"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
                         <div id="password" class="col-sm-6">Password: </div>
                         <div class="col-sm-6">
                             <form:password path="password" id="inputPassword"/>
@@ -69,6 +78,7 @@
                         <div id="date_de_naissance" class="col-sm-6">Date de naissance: </div>
                         <div class="col-sm-6">
                             <form:input path="date_de_naissance" />
+                            <form:errors path="date_de_naissance" />
                         </div>
                     </div>
                 </div>

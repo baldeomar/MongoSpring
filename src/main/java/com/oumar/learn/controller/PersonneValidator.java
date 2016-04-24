@@ -2,9 +2,9 @@ package com.oumar.learn.controller;
 
 import com.oumar.learn.model.Vto.PersonneVto;
 import com.oumar.learn.service.PersonService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -36,12 +36,18 @@ public class PersonneValidator implements Validator{
                 Matcher matcher = pattern.matcher(personneVto.getEmail());
                 if (!matcher.matches()) {
                     errors.rejectValue("email", "email.not.valid");
-                }else if(StringUtils.isEmpty(personneVto.getPassword())){
+                }
+                if(StringUtils.isEmpty(personneVto.getPassword())){
                     errors.rejectValue("password", "password.not.correct");
-                }else if(!personneVto.getPassword().equals(personneVto.getMatchingPassword())){
+                }
+                if(!personneVto.getPassword().equals(personneVto.getMatchingPassword())){
                     errors.rejectValue("matchingPassword", "password.not.match");
-                }else if(personService.getByEmail(personneVto.getEmail()) != null) {
+                }
+                if(personService.getByEmail(personneVto.getEmail()) != null) {
                     errors.rejectValue("email", "email.already.used");
+                }
+                if(StringUtils.isEmpty(personneVto.getDate_de_naissance())){
+                    errors.rejectValue("date_de_naissance", "input.champs.incorrect");
                 }
             }
         }
