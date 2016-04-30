@@ -9,23 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class TesteurServlet extends HttpServlet implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	private static Logger logger = LoggerFactory.getLogger(TesteurServlet.class);
-	
+
+    @Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try{
 			HttpSession session = request.getSession();
 			Integer ct = (Integer) session.getAttribute("ct");
-			logger.info("session id: "+session.getId()+", ct: "+ct);
+			log.info("session id: {}, ct: {}", session.getId(), ct);
 			if(ct == null){
 				ct = new Integer(0);
 			}else{
@@ -36,11 +34,11 @@ public class TesteurServlet extends HttpServlet implements Serializable{
 			writer.write("how high number: "+ct);
 			writer.close();
 		}catch(IOException ioe) {
-			ioe.printStackTrace();
+			log.info("error occured: {}", ioe);
 		}
-		logger.info("End of TesteurServlet");
 	}
-	
+
+    @Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		doGet(request, response);
 	}
