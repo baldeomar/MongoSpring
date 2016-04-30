@@ -10,4 +10,6 @@ public interface PersonService {
 
     Person getByEmail(String email);
 
+    Person getByUsername(String username);
+
 }

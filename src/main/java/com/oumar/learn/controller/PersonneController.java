@@ -6,6 +6,7 @@ import com.oumar.learn.model.Person;
 import com.oumar.learn.model.Vto.PersonneVto;
 import com.oumar.learn.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -44,10 +45,10 @@ public class PersonneController {
 		@RequestParam(value = "error", required = false) String error,
 		@RequestParam(value = "logout", required = false) String logout,
 		Model model) {
-		if (error != null) {
+		if (!StringUtils.isEmpty(error)) {
 			model.addAttribute(MODEL_ATTRIBUTE_ERROR, "Invalid username and password!");
 		}
-		if (logout != null) {
+		if (!StringUtils.isEmpty(logout)) {
 			model.addAttribute(MODEL_ATTRIBUTE_MESSAGE, "You've been logged out successfully.");
 		}
 		model.addAttribute(MODEL_ATTRIBUTE_REGISTER_PAGE, AppUrl.REGISTER_PRE);

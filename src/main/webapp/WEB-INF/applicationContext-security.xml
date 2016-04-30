@@ -10,9 +10,10 @@
 		<intercept-url pattern="/admin**" access="ROLE_USER" />
 		<form-login 
 		    login-page="/login" 
-		    default-target-url="/welcome" 
-			authentication-failure-url="/login?error" 
-			username-parameter="email"
+		    default-target-url="/home"
+			authentication-failure-url="/login?error"
+			login-processing-url="/j_spring_security_check"
+			username-parameter="username"
 			password-parameter="password" />
 		<logout logout-success-url="/login?logout" />
 	</http>
@@ -25,11 +26,7 @@
 		<!--</authentication-provider>-->
 	<!--</authentication-manager>-->
 	<authentication-manager>
-		<authentication-provider>
-			<jdbc-user-service data-source-ref="dataSource"
-							   users-by-username-query="select username, password from Person where username = ?"/>
-							   <!--authorities-by-username-query="select username,role from Roles where username = ?"-->
-		</authentication-provider>
+		<authentication-provider ref="myAuthenticationProvider" />
 	</authentication-manager>
 
 </beans:beans>

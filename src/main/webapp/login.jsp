@@ -20,8 +20,8 @@
 		<form id="loginForm" name="loginForm" action="<c:url value='j_spring_security_check'/>" method='POST'>
 			<div class="row">
 				<div class="col-xs-6">
-					<div class="col-sm-3">Email:</div>
-					<div class="col-sm-3"><input type='text' name='email' value=''></div>
+					<div class="col-sm-3">Username:</div>
+					<div class="col-sm-3"><input type='text' name='username' value=''></div>
 				</div>
 			</div>
 			<div class="row">

@@ -7,4 +7,6 @@ public interface PersonDAO extends JpaRepository<Person, Integer>{
 
     Person getByEmail(String email);
 
+    Person getByUsername(String username);
+
 }

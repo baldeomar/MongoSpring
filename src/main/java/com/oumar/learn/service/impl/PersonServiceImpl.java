@@ -29,4 +29,8 @@ public class PersonServiceImpl implements PersonService{
         return personDAO.getByEmail(email);
     }
 
+    @Override
+    public Person getByUsername(String username) {
+        return personDAO.getByUsername(username);
+    }
 }
