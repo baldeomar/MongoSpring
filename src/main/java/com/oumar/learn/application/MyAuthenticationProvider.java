@@ -28,10 +28,10 @@ public class MyAuthenticationProvider implements AuthenticationProvider{
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
-        String password = bCryptPasswordEncoder.encode((String) authentication.getCredentials());
+        String password = (String) authentication.getCredentials();
 
         Person person = personService.getByUsername(username);
-        if(person == null || !person.getPassword().equals(password)){
+        if(person == null || !bCryptPasswordEncoder.matches(password, person.getPassword())){
             throw new BadCredentialsException("Bad Username or password");
         }
         List<GrantedAuthority> authorityList = new ArrayList<>();
@@ -41,6 +41,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider{
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return false;
+        return aClass.equals(UsernamePasswordAuthenticationToken.class);
     }
 }

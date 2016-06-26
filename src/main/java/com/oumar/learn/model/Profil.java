@@ -2,6 +2,8 @@ package com.oumar.learn.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -15,6 +17,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
+@Cache(region = "mongoCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "Profil")
 @SuppressWarnings("PMD.UnusedPrivateField")
 public class Profil {

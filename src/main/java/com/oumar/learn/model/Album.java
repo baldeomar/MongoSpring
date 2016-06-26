@@ -1,46 +1,37 @@
 package com.oumar.learn.model;
 
-import org.springframework.data.annotation.Id;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Getter
+@Setter
+@Entity
+@Cache(region = "mongoCache", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Table(name = "Album")
 public class Album {
 	
-	@Id private String id;
-	
+	@Id
+	@Column(name = "album_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "album_name")
+	@NotEmpty
 	private String name;
-	
-	private int type;
-	
-	private String person;
-	
-	public String getId() {
-		return id;
-	}
 
-	public String getName() {
-		return name;
-	}
-
-	public int getType() {
-		return type;
-	}
-	
-	public String getPerson() {
-		return person;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-	
-	public void setPerson(String person) {
-		this.person = person;
-	}
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "person_id", name = "person_fk")
+	private Person person;
 }

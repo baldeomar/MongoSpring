@@ -6,10 +6,16 @@ import com.oumar.learn.model.Person;
 import com.oumar.learn.model.Vto.PersonneVto;
 import com.oumar.learn.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.statistics.StatisticsGateway;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Hibernate;
+import org.hibernate.stat.Statistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,9 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.terracotta.statistics.Statistic;
 
-import javax.validation.Valid;
+import java.net.URL;
+import java.util.Objects;
 
+@Transactional
 @Slf4j
 @Controller
 public class PersonneController {
@@ -56,8 +65,18 @@ public class PersonneController {
 		return PageMap.LOGIN;
 	}
 
-	@RequestMapping(value = AppUrl.HOME, method = RequestMethod.POST)
+	@RequestMapping(value = AppUrl.HOME, method = {RequestMethod.POST, RequestMethod.GET})
 	public String showHomePage(){
+		URL url = getClass().getResource("/ehcache.xml");
+		CacheManager cacheManager = CacheManager.newInstance(url);
+		Cache cache = cacheManager.getCache("mongoCache");
+		StatisticsGateway statistic = cache.getStatistics();
+		log.warn("cache size: {}", cache.getSize());
+		Person person = personService.findOne(2);
+		if(Objects.nonNull(person)) {
+			Hibernate.initialize(person.getAlbums());
+			log.warn("person found: {}\n album size: {}", person.toString(), person.getAlbums().size());
+		}
 		return PageMap.HOME;
 	}
 	

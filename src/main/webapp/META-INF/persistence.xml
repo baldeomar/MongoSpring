@@ -11,6 +11,9 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test"/>
             <property name="javax.persistence.jdbc.user" value="test"/>
             <property name="javax.persistence.jdbc.password" value="test"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>
+            <property name="net.sf.ehcache.configurationResourceName" value="/ehcache.xml"/>
         </properties>
     </persistence-unit>
 </persistence>
